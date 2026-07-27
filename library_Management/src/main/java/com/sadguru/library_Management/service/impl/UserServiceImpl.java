@@ -1,6 +1,8 @@
 package com.sadguru.library_Management.service.impl;
 
+import com.sadguru.library_Management.dto.request.LoginRequest;
 import com.sadguru.library_Management.dto.request.UserRequest;
+import com.sadguru.library_Management.dto.response.ApiResponse;
 import com.sadguru.library_Management.dto.response.UserResponse;
 import com.sadguru.library_Management.entity.User;
 import com.sadguru.library_Management.exception.ResourceNotFoundException;
@@ -75,6 +77,22 @@ public class UserServiceImpl implements UserService {
                         new ResourceNotFoundException("No book found with this id: "+ id));
         repository.delete(user);
 
+    }
+
+    public ApiResponse login(LoginRequest request) {
+
+        User user = repository.findByUserName(request.getUserName())
+                .orElse(null);
+
+        if (user == null) {
+            return new ApiResponse("User not found");
+        }
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return new ApiResponse("Invalid Password");
+        }
+
+        return new ApiResponse("Login Successful");
     }
 
     public UserResponse mapToResponse(User user){

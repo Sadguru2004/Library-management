@@ -1,7 +1,9 @@
 package com.sadguru.library_Management.controller;
 
 
+import com.sadguru.library_Management.dto.request.LoginRequest;
 import com.sadguru.library_Management.dto.request.UserRequest;
+import com.sadguru.library_Management.dto.response.ApiResponse;
 import com.sadguru.library_Management.dto.response.UserResponse;
 import com.sadguru.library_Management.service.UserService;
 import jakarta.validation.Valid;
@@ -43,5 +45,10 @@ public class UserController {
     public ResponseEntity<String> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.ok("Deleted successfully");
+    }
+
+    @PostMapping("/login")
+    public ApiResponse login(@RequestBody LoginRequest request) {
+        return service.login(request);
     }
 }
