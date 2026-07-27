@@ -9,6 +9,7 @@ import com.sadguru.library_Management.service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final PasswordEncoder passwordEncoder;
+
     private final UserRepository repository;
 
     @Override
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService {
                  .userName(request.getUserName())
                  .email(request.getEmail())
                  .fullName(request.getFullName())
-                 .password(request.getPassword())
+                 .password(passwordEncoder.encode(request.getPassword()))
                  .created_at(LocalDateTime.now())
                  .build();
          User savedUser = repository.save(user);

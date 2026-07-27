@@ -1,5 +1,6 @@
 package com.sadguru.library_Management.controller;
 
+
 import com.sadguru.library_Management.dto.request.UserRequest;
 import com.sadguru.library_Management.dto.response.UserResponse;
 import com.sadguru.library_Management.service.UserService;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService service;
+
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> addUser(@Valid @RequestBody UserRequest request){
